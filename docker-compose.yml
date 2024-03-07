@@ -11,6 +11,13 @@ services:
       MYSQL_DATABASE: teamb
       MYSQL_ROOT_HOST: '%'
       MYSQL_ROOT_PASSWORD: 1234
-    command: # 명령어 실행
+    command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
+  server:
+    container_name: server
+    build: .  # Dockerfile이 위치한 디렉터리를 가리키며, 일반적으로 Dockerfile의 이름을 지정하지 않습니다.
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev

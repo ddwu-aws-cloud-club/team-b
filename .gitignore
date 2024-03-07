@@ -47,3 +47,9 @@ out/
 
 .DS_Store
 logs/
+
+/application
+/dependencies
+/class-registration
+/snapshot-dependencies
+/spring-boot-loader
