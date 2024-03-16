@@ -1,20 +1,22 @@
 package org.course.registration.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
 public class Student {
 
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long studentId;
-    private String name;
+    @Column(name = "student_id")
+    private int id; // 학번
+
+    @OneToMany(mappedBy = "student")
+    private List<Enroll> enrolls = new ArrayList<>();
 
 }
