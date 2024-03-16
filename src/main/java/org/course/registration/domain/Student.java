@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Entity
 public class Student {
-
     @Id
     @Column(name = "student_id")
     private int id; // 학번

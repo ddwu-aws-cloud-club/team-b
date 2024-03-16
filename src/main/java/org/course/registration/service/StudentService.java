@@ -37,6 +37,4 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    // 학생 전체 조회
-
 }

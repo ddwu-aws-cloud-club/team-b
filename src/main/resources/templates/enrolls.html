@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수강신청페이지</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 500px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .container {
+            text-align: center;
+        }
+        .course-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 400px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .course-name {
+            flex: 1;
+        }
+        .enrollment-count {
+            margin-right: 20px;
+        }
+        .enroll-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .enroll-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>수강 신청 페이지</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>과목명</th>
+                    <th>담당 교수</th>
+                    <th>수강신청 인원</th>
+                    <th>신청하기</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>컴퓨터 구조</td>
+                    <td>남현우</td>
+                    <td>20/30</td>
+                    <td><button class="enroll-button">신청하기</button></td>
+                </tr>
+                <tr>
+                    <td>문제해결기법</td>
+                    <td>박수희</td>
+                    <td>40/40</td>
+                    <td><button class="enroll-button">신청하기</button></td>
+                </tr>
+                <tr>
+                    <td>알고리즘</td>
+                    <td>한 혁</td>
+                    <td>39/40</td>
+                    <td><button class="enroll-button">신청하기</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
