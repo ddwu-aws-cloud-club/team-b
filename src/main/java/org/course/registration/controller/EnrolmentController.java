@@ -12,5 +12,5 @@ public class EnrolmentController {
     public String enrolment(){
         return "enrolls";
     }
-    
+
 }
