@@ -70,22 +70,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>컴퓨터 구조</td>
-                    <td>남현우</td>
-                    <td>20/30</td>
-                    <td><button class="enroll-button">신청하기</button></td>
-                </tr>
-                <tr>
-                    <td>문제해결기법</td>
-                    <td>박수희</td>
-                    <td>40/40</td>
-                    <td><button class="enroll-button">신청하기</button></td>
-                </tr>
-                <tr>
-                    <td>알고리즘</td>
-                    <td>한 혁</td>
-                    <td>39/40</td>
+                <tr th:each="course : ${courses}">
+                    <td th:text="${course.name}"></td>
+                    <td th:text="${course.pro}"></td>
+                    <td th:text="${course.count}/${course.limited}"></td>
+                    <td th:text="${course.name}"></td>
                     <td><button class="enroll-button">신청하기</button></td>
                 </tr>
             </tbody>
