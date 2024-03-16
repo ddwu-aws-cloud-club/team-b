@@ -24,6 +24,6 @@ public class StudentController {
 
         studentService.register(student);
 
-        return "redirect:enrolls";
+        return "redirect:/enrolment";
     }
 }
