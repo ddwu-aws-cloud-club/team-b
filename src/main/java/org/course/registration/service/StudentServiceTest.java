@@ -33,12 +33,20 @@ public class StudentServiceTest {
         assertEquals(student, studentRepository.fineOne(saveId));
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void 중복_회원_예외() throws Exception{
         // given
+        Student student1 = new Student();
+        student1.setId(20201051);
+
+        Student student2 = new Student();
+        student2.setId(20201051);
 
         // when
+        studentService.register(student1);
+        studentService.register(student2);
 
         // then
+        fail("예외가 발생해야 한다.");
     }
 }
