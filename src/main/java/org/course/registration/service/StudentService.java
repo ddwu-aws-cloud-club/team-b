@@ -1,46 +1,42 @@
 package org.course.registration.service;
 
+import lombok.RequiredArgsConstructor;
 import org.course.registration.domain.Student;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.course.registration.repository.StudentRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-@Transactional
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class StudentService {
-    @Autowired
-    private StudentRepository studentRepository;
 
-    public List<Student> getAllStudents() {
+    private final StudentRepository studentRepository;
+
+    /***
+     * 학생 등록
+     */
+    @Transactional
+    public int register(Student student){
+        validateDuplicateStudent(student); // 중복 학생 검증
+        studentRepository.save(student);
+        return student.getId();
+    }
+
+    private void validateDuplicateStudent(Student student){
+        List<Student> findStudents = studentRepository.findById(student.getId());
+        if(!findStudents.isEmpty()){
+            throw new IllegalStateException("이미 등록된 학번입니다.");
+        }
+    }
+
+    // 학생 전체 조회
+    public List<Student> findStudents(){
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getStudentById(Long id) {
-        return studentRepository.findById(id);
-    }
+    // 학생 전체 조회
 
-    public Student createStudent(Student student) {
-        return studentRepository.save(student);
-    }
-
-    public Student updateStudent(Long id, Student studentDetails) {
-        Optional<Student> optionalStudent = studentRepository.findById(id);
-        if (optionalStudent.isPresent()) {
-            Student student = optionalStudent.get();
-            student.setName(studentDetails.getName());
-            return studentRepository.save(student);
-        }
-        return null;
-    }
-
-    public boolean deleteStudent(Long id) {
-        Optional<Student> optionalStudent = studentRepository.findById(id);
-        if (optionalStudent.isPresent()) {
-            studentRepository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
 }
