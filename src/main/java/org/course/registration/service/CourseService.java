@@ -2,9 +2,7 @@ package org.course.registration.service;
 
 import lombok.RequiredArgsConstructor;
 import org.course.registration.domain.Course;
-import org.course.registration.domain.Student;
 import org.course.registration.repository.CourseRepository;
-import org.course.registration.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
