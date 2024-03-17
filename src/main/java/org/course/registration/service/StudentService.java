@@ -37,4 +37,9 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
+    // 학생 ID로 학생 조회
+    public Student findStudentById(int id){
+        return studentRepository.findOneById(id);
+    }
+
 }

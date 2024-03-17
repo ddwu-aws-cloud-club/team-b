@@ -1,34 +1,47 @@
 package org.course.registration.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
+import org.course.registration.domain.Course;
 import org.course.registration.domain.Enroll;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class EnrollRepository {
+
     private final EntityManager em;
 
-    public void save(Enroll enroll){
+    public void save(Enroll enroll) {
         em.persist(enroll);
     }
 
-    public Enroll findOne(Long id){
-        return em.find(Enroll.class, id);
+    // 학생의 수강신청한 과목들 조회
+    public List<Course> findCoursesByStudentId(int studentId) {
+        TypedQuery<Course> query = em.createQuery(
+                "SELECT e.course FROM Enroll e WHERE e.student.id = :studentId", Course.class);
+        query.setParameter("studentId", studentId);
+        return query.getResultList();
     }
 
-    public List<Enroll> findAll() {
-        return em.createQuery("select e from Enroll e", Enroll.class)
-                .getResultList();
-    }
-
-    public List<Enroll> findByStudentId(int studentId){
-        return em.createQuery("select e from Enroll e where e.student.id = :studentId", Enroll.class)
+    // 수강 취소
+    public void deleteByStudentIdAndCourseId(int studentId, int courseId) {
+        em.createQuery("DELETE FROM Enroll e WHERE e.student.id = :studentId AND e.course.id = :courseId")
                 .setParameter("studentId", studentId)
-                .getResultList();
+                .setParameter("courseId", courseId)
+                .executeUpdate();
+    }
+
+    // 이미 수강신청한 과목인지 check
+    public Optional<Enroll> findByStudentIdAndCourseId(int studentId, int courseId) {
+        return em.createQuery("SELECT e FROM Enroll e WHERE e.student.id = :studentId AND e.course.id = :courseId", Enroll.class)
+                .setParameter("studentId", studentId)
+                .setParameter("courseId", courseId)
+                .getResultList().stream().findFirst();
     }
 
 

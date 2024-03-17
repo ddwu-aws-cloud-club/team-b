@@ -30,4 +30,9 @@ public class StudentRepository {
                 .setParameter("id", id)
                 .getResultList();
     }
+
+    // 특정 ID에 해당하는 학생 한 명을 반환
+    public Student findOneById(int id){
+        return em.find(Student.class, id);
+    }
 }

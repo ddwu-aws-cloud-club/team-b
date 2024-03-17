@@ -11,13 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 @RequiredArgsConstructor
 @Configuration
-//@ComponentScan(basePackages = {"org.course.registration"})
 public class SpringConfig {
-//    private EntityManager em;
-//
-//    @Autowired
-//    public SpringConfig(EntityManager em) {
-//        this.em = em;
-//    }
 
 }

@@ -73,12 +73,68 @@
                 <tr th:each="course : ${courses}">
                     <td th:text="${course.name}"></td>
                     <td th:text="${course.pro}"></td>
-                    <td th:text="${course.count}/${course.limited}"></td>
+                    <td th:text="${course.count} + '/' + ${course.limited}"></td>
                     <td th:text="${course.name}"></td>
-                    <td><button class="enroll-button">신청하기</button></td>
+                    <td>
+                        <form th:action="@{/enrollment/course/enroll}" method="post">
+                            <input type="hidden" name="course_id" th:value="${course.id}" />
+                            <button type="submit" class="enroll-button">신청하기</button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
+
+        <!-- 수강신청 완료 리스트 표 -->
+        <table>
+            <caption>수강신청 완료 리스트</caption>
+            <thead>
+            <tr>
+                <th>과목명</th>
+                <th>담당 교수</th>
+                <th>수강신청 인원</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="enrolledCourse : ${enrolledCourses}">
+                <td th:text="${enrolledCourse.name}"></td>
+                <td th:text="${enrolledCourse.pro}"></td>
+                <td th:text="${enrolledCourse.count} + '/' + ${enrolledCourse.limited}"></td>
+                <td>
+                    <form th:action="@{/enrollment/course/cancel}" method="post">
+                        <input type="hidden" name="course_id" th:value="${enrolledCourse.id}" />
+                        <button type="submit" class="cancel-button">수강 취소</button>
+                    </form>
+                <td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('success');
+            const overError = urlParams.get('overError')
+            const existError = urlParams.get("existError")
+            const cancelSuccess = urlParams.get('cancelSuccess');
+            const error = urlParams.get('error');
+
+            if (success === 'true') {
+                alert('수강신청이 정상적으로 완료되었습니다.');
+            } else if (overError === 'true') {
+                alert('수강 정원이 초과되었습니다');
+            }
+            else if (existError === 'true') {
+                alert('이미 수강 중인 과목입니다.');
+            }
+            else if (cancelSuccess === 'true') {
+                alert('취소되었습니다.');
+            } else if (error) {
+                alert(`수강신청 중 오류가 발생했습니다: ${error}`);
+            }
+        });
+    </script>
+
 </body>
 </html>

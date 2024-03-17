@@ -17,4 +17,21 @@ public class CourseRepository {
         return em.createQuery("select c from Course c", Course.class)
                 .getResultList();
     }
+
+    // ID로 과목 조회
+    public Course findById(int id){
+        return em.find(Course.class, id);
+    }
+
+    // Course 엔티티 저장 또는 업데이트
+    public Course save(Course course) {
+        if (course.getId() == 0) {
+            // 새로운 거면 저장
+            em.persist(course);
+            return course;
+        } else {
+            // 이미 존재하면 업데이트
+            return em.merge(course);
+        }
+    }
 }

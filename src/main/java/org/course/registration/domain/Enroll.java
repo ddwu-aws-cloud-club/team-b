@@ -7,7 +7,9 @@ import lombok.Setter;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "enroll")
+@Table(name = "enroll", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"student_id", "course_id"})
+})
 @Getter
 @Setter
 public class Enroll{
@@ -20,7 +22,7 @@ public class Enroll{
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
 
