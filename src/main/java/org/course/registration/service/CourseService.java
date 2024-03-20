@@ -2,6 +2,8 @@ package org.course.registration.service;
 
 import lombok.RequiredArgsConstructor;
 import org.course.registration.domain.Course;
+import org.course.registration.domain.Enroll;
+import org.course.registration.domain.Student;
 import org.course.registration.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,4 +32,5 @@ public class CourseService {
     public Course updateCourse(Course course) {
         return courseRepository.save(course); // 변경된 course 엔티티를 저장
     }
+
 }

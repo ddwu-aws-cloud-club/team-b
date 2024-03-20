@@ -74,7 +74,6 @@
                     <td th:text="${course.name}"></td>
                     <td th:text="${course.pro}"></td>
                     <td th:text="${course.count} + '/' + ${course.limited}"></td>
-                    <td th:text="${course.name}"></td>
                     <td>
                         <form th:action="@{/enrollment/course/enroll}" method="post">
                             <input type="hidden" name="course_id" th:value="${course.id}" />
