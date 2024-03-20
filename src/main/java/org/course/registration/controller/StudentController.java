@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.course.registration.domain.Student;
 import org.course.registration.service.StudentService;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -23,7 +24,11 @@ public class StudentController {
         Student student = new Student();
         student.setId(student_id);
 
-        studentService.register(student);
+        try{
+            studentService.register(student);
+        } catch (IllegalStateException e){
+            return "redirect:/enrollment";
+        }
 
         return "redirect:/enrollment";
     }
