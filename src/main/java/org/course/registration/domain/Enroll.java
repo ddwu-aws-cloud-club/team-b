@@ -14,7 +14,7 @@ import jakarta.persistence.*;
 @Setter
 public class Enroll{
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "enroll_id")
     private Long id;
 
