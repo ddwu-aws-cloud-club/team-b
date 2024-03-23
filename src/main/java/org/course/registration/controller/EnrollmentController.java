@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.course.registration.domain.Course;
-import org.course.registration.exception.NotEnoughException;
 import org.course.registration.service.CourseService;
 import org.course.registration.service.EnrollService;
 import org.springframework.stereotype.Controller;
@@ -52,22 +51,9 @@ public class EnrollmentController {
         }
 
         int studentId = (int) session.getAttribute("student_id");
-
-        try {
-            // 과목 수강 신청 진행
-            enrollService.enrollCourse(studentId, courseId);
-            return "redirect:/enrollment?success=true";
-        } catch (NotEnoughException e) {
-            // 정원 초과
-            return "redirect:/enrollment?overError=true";
-
-        } catch (IllegalStateException e) {
-            // 이미 수강신청 한 과목
-            return "redirect:/enrollment?existError=true";
-        } catch (Exception e) {
-            // 기타 오류
-            return "redirect:/enrollment?error=true";
-        }
+        // 과목 수강 신청 진행
+        enrollService.enrollCourse(studentId, courseId);
+        return "redirect:/enrollment?success=true";
     }
 
     // 수강 신청 취소

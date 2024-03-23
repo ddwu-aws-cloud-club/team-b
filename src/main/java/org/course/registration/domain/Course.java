@@ -3,7 +3,6 @@ package org.course.registration.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.course.registration.exception.NotEnoughException;
 
 @Entity
 @Getter
@@ -11,7 +10,7 @@ import org.course.registration.exception.NotEnoughException;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
     private int id; // 과목 id
 
