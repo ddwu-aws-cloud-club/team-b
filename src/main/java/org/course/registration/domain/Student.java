@@ -7,7 +7,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Getter
 @Entity
 public class Student {
@@ -17,6 +16,13 @@ public class Student {
 
     @OneToMany(mappedBy = "student")
     private List<Enroll> enrolls = new ArrayList<>();
+
+    public Student(){
+    }
+
+    public Student(int student_id){
+        this.id = student_id;
+    }
 
 }
 

@@ -72,7 +72,7 @@
             <tbody>
                 <tr th:each="course : ${courses}">
                     <td th:text="${course.name}"></td>
-                    <td th:text="${course.pro}"></td>
+                    <td th:text="${course.professor}"></td>
                     <td th:text="${course.count} + '/' + ${course.limited}"></td>
                     <td>
                         <form th:action="@{/enrollment/course/enroll}" method="post">
@@ -97,7 +97,7 @@
             <tbody>
             <tr th:each="enrolledCourse : ${enrolledCourses}">
                 <td th:text="${enrolledCourse.name}"></td>
-                <td th:text="${enrolledCourse.pro}"></td>
+                <td th:text="${enrolledCourse.professor}"></td>
                 <td th:text="${enrolledCourse.count} + '/' + ${enrolledCourse.limited}"></td>
                 <td>
                     <form th:action="@{/enrollment/course/cancel}" method="post">

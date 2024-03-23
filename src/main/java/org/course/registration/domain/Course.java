@@ -17,7 +17,7 @@ public class Course {
 
     private String name; // 과목 이름
 
-    private String pro; // 교수님 성함
+    private String professor; // 교수님 성함
 
     private int limited; // 수강 정원
 

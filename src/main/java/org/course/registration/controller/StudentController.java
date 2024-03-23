@@ -23,14 +23,9 @@ public class StudentController {
         session.setAttribute("student_id", student_id);
 
         // 학번 등록
-        Student student = new Student();
-        student.setId(student_id);
+        Student student = new Student(student_id);
 
-        try{
-            studentService.register(student);
-        } catch (IllegalStateException e){
-            return "redirect:/enrollment";
-        }
+        studentService.register(student);
 
         return "redirect:/enrollment";
     }
