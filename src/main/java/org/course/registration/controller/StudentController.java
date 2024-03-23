@@ -25,7 +25,7 @@ public class StudentController {
         // 학번 등록
         Student student = new Student(student_id);
 
-        studentService.register(student);
+        studentService.registerStudent(student);
 
         return "redirect:/enrollment";
     }
