@@ -17,13 +17,14 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/student")
-    public String register(@RequestParam("student_id") int student_id, HttpServletRequest request){
+    public String register(@RequestParam("student_id") int student_id, @RequestParam("phoneNum") String phoneNum, HttpServletRequest request){
         // 세션에 학번 저장
         HttpSession session = request.getSession();
         session.setAttribute("student_id", student_id);
+        session.setAttribute("phoneNum", phoneNum);
 
         // 학번 등록
-        Student student = new Student(student_id);
+        Student student = new Student(student_id, phoneNum);
 
         studentService.registerStudent(student);
 

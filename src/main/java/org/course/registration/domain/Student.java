@@ -13,14 +13,17 @@ public class Student {
     @Column(name = "student_id")
     private int id; // 학번
 
+    private String phoneNum; // 전화번호
+
     @OneToMany(mappedBy = "student")
     private List<Enroll> enrolls = new ArrayList<>();
 
     public Student(){
     }
 
-    public Student(int student_id){
+    public Student(int student_id, String phoneNum){
         this.id = student_id;
+        this.phoneNum = phoneNum;
     }
 
 }
