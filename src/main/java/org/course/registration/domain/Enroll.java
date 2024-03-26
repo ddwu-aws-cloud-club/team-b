@@ -8,22 +8,22 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "enroll", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"student_id", "course_id"})
+        @UniqueConstraint(columnNames = {"studentId", "courseId"})
 })
 @Getter
 @Setter
 public class Enroll{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "enroll_id")
+    @Column(name = "enrollId")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "studentId")
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "courseId")
     private Course course;
 
     //==연관관계 메서드==//

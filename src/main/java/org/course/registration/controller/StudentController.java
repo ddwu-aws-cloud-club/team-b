@@ -17,8 +17,8 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/student")
-    public String register(@RequestParam("student_id") int student_id, @RequestParam("phoneNum") String phoneNum, HttpServletRequest request){
-        Student student = new Student(student_id, phoneNum);
+    public String register(@RequestParam("studentId") int studentId, @RequestParam("phoneNum") String phoneNum, HttpServletRequest request){
+        Student student = new Student(studentId, phoneNum);
 
         // 학생 등록 및 세션 저장
         studentService.CreateSession(student, request);

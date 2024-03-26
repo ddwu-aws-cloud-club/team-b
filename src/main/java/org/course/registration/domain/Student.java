@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Student {
     @Id
-    @Column(name = "student_id")
+    @Column(name = "studentId")
     private int id; // 학번
 
     private String phoneNum; // 전화번호
@@ -20,8 +20,8 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private List<Enroll> enrolls = new ArrayList<>();
 
-    public Student(int student_id, String phoneNum){
-        this.id = student_id;
+    public Student(int studentId, String phoneNum){
+        this.id = studentId;
         this.phoneNum = phoneNum;
     }
 

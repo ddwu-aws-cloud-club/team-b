@@ -25,12 +25,12 @@ public class EnrollmentController {
     public String enrolment(Model model, HttpServletRequest request){
         // 세션에서 아이디 가져오기
         HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("student_id") == null) {
+        if (session == null || session.getAttribute("studentId") == null) {
             return "redirect:/";
         }
 
         // 사용자 ID 가져오기
-        int studentId = (int) session.getAttribute("student_id");
+        int studentId = (int) session.getAttribute("studentId");
 
         List<Course> courses = courseService.findCourses();
         List<Course> enrolledCourses = enrollService.findEnrollmentsByStudentId(studentId);
@@ -44,13 +44,13 @@ public class EnrollmentController {
 
     // 수강신청
     @PostMapping("/enrollment/course/enroll")
-    public String enrollCourse(@RequestParam("course_id") int courseId, HttpServletRequest request) {
+    public String enrollCourse(@RequestParam("courseId") int courseId, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("student_id") == null) {
+        if (session == null || session.getAttribute("studentId") == null) {
             return "redirect:/";
         }
 
-        int studentId = (int) session.getAttribute("student_id");
+        int studentId = (int) session.getAttribute("studentId");
         // 과목 수강 신청 진행
         enrollService.enrollCourse(studentId, courseId);
         return "redirect:/enrollment?success=true";
@@ -58,13 +58,13 @@ public class EnrollmentController {
 
     // 수강 신청 취소
     @PostMapping("/enrollment/course/cancel")
-    public String cancelEnrollment(@RequestParam("course_id") int courseId, HttpServletRequest request) {
+    public String cancelEnrollment(@RequestParam("courseId") int courseId, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("student_id") == null) {
+        if (session == null || session.getAttribute("studentId") == null) {
             return "redirect:/";
         }
 
-        int studentId = (int) session.getAttribute("student_id");
+        int studentId = (int) session.getAttribute("studentId");
         enrollService.cancelEnrollment(studentId, courseId);
         return "redirect:/enrollment?cancelSuccess=true";
     }

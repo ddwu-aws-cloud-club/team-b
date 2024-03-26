@@ -31,7 +31,7 @@ public class StudentService {
     public void CreateSession(Student student, HttpServletRequest request) {
         // 세션에 학번 저장
         HttpSession session = request.getSession();
-        session.setAttribute("student_id", student.getId());
+        session.setAttribute("", student.getId());
         session.setAttribute("phoneNum", student.getPhoneNum());
     }
 

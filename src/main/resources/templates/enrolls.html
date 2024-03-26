@@ -76,7 +76,7 @@
                     <td th:text="${course.count} + '/' + ${course.limited}"></td>
                     <td>
                         <form th:action="@{/enrollment/course/enroll}" method="post">
-                            <input type="hidden" name="course_id" th:value="${course.id}" />
+                            <input type="hidden" name="courseId" th:value="${course.id}" />
                             <button type="submit" class="enroll-button">신청하기</button>
                         </form>
                     </td>
@@ -101,7 +101,7 @@
                 <td th:text="${enrolledCourse.count} + '/' + ${enrolledCourse.limited}"></td>
                 <td>
                     <form th:action="@{/enrollment/course/cancel}" method="post">
-                        <input type="hidden" name="course_id" th:value="${enrolledCourse.id}" />
+                        <input type="hidden" name="courseId" th:value="${enrolledCourse.id}" />
                         <button type="submit" class="cancel-button">수강 취소</button>
                     </form>
                 <td>
