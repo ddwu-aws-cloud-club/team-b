@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.course.registration.domain.Student;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.course.registration.repository.StudentRepository;
@@ -31,7 +30,7 @@ public class StudentService {
     public void CreateSession(Student student, HttpServletRequest request) {
         // 세션에 학번 저장
         HttpSession session = request.getSession();
-        session.setAttribute("", student.getId());
+        session.setAttribute("studentId", student.getId());
         session.setAttribute("phoneNum", student.getPhoneNum());
     }
 
