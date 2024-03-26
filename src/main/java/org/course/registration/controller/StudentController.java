@@ -18,15 +18,11 @@ public class StudentController {
 
     @PostMapping("/student")
     public String register(@RequestParam("student_id") int student_id, @RequestParam("phoneNum") String phoneNum, HttpServletRequest request){
-        // 세션에 학번 저장
-        HttpSession session = request.getSession();
-        session.setAttribute("student_id", student_id);
-        session.setAttribute("phoneNum", phoneNum);
-
-        // 학번 등록
         Student student = new Student(student_id, phoneNum);
 
-        studentService.registerStudent(student);
+        // 학생 등록 및 세션 저장
+        studentService.CreateSession(student, request);
+        studentService.register(student);
 
         return "redirect:/enrollment";
     }
