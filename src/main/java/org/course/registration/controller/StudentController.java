@@ -17,20 +17,12 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/student")
-    public String register(@RequestParam("student_id") int student_id, HttpServletRequest request){
-        // 세션에 학번 저장
-        HttpSession session = request.getSession();
-        session.setAttribute("student_id", student_id);
+    public String register(@RequestParam("studentId") int studentId, @RequestParam("phoneNum") String phoneNum, HttpServletRequest request){
+        Student student = new Student(studentId, phoneNum);
 
-        // 학번 등록
-        Student student = new Student();
-        student.setId(student_id);
-
-        try{
-            studentService.register(student);
-        } catch (IllegalStateException e){
-            return "redirect:/enrollment";
-        }
+        // 학생 등록 및 세션 저장
+        studentService.CreateSession(student, request);
+        studentService.register(student);
 
         return "redirect:/enrollment";
     }

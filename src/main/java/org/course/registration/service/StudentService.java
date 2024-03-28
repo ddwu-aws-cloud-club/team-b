@@ -1,5 +1,7 @@
 package org.course.registration.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.course.registration.domain.Student;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,13 @@ public class StudentService {
         validateDuplicateStudent(student); // 중복 학생 검증
         studentRepository.save(student);
         return student.getId();
+    }
+
+    public void CreateSession(Student student, HttpServletRequest request) {
+        // 세션에 학번 저장
+        HttpSession session = request.getSession();
+        session.setAttribute("studentId", student.getId());
+        session.setAttribute("phoneNum", student.getPhoneNum());
     }
 
     private void validateDuplicateStudent(Student student){

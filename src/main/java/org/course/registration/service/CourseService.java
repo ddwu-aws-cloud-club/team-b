@@ -2,8 +2,6 @@ package org.course.registration.service;
 
 import lombok.RequiredArgsConstructor;
 import org.course.registration.domain.Course;
-import org.course.registration.domain.Enroll;
-import org.course.registration.domain.Student;
 import org.course.registration.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +25,15 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
-    // CourseService 내에 업데이트 메서드 추가
-    @Transactional
-    public Course updateCourse(Course course) {
-        return courseRepository.save(course); // 변경된 course 엔티티를 저장
+    // Course 엔티티를 저장 or 업데이트
+    public Course saveOrUpdateCourse(Course course) {
+        if (course.getId() == 0) {
+            courseRepository.persist(course);
+        } else { // 업데이트
+            course = courseRepository.merge(course);
+        }
+        return course;
     }
+
 
 }
