@@ -73,3 +73,11 @@ sourceSets {
 clean {
     delete file(generated)
 }
+
+task copyPrivate(type: Copy) {
+    copy {
+        from './team-b-config'
+        include "*.yml"
+        into 'src/main/resources'
+    }
+}
