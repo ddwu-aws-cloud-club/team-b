@@ -1,0 +1,3 @@
+[submodule "team-b-config"]
+	path = team-b-config
+	url = https://github.com/ddwu-aws-cloud-club/team-b-config.git
