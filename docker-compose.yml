@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 services:
   mysql:
@@ -14,6 +14,12 @@ services:
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   server:
     container_name: server
     build: .  # Dockerfile이 위치한 디렉터리를 가리키며, 일반적으로 Dockerfile의 이름을 지정하지 않습니다.
@@ -21,3 +27,6 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: local
+    depends_on:
+      mysql:
+        condition: service_healthy
