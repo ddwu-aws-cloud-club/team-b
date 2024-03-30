@@ -18,7 +18,7 @@ generated/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-**/src/main/resources/application-dev.yml
+**/src/main/resources/application-local.yml
 **/src/main/resources/application-prod.yml
 
 /api-module/application/
