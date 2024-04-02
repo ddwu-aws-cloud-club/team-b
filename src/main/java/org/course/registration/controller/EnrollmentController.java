@@ -2,10 +2,13 @@ package org.course.registration.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
 import lombok.RequiredArgsConstructor;
+
 import org.course.registration.domain.Course;
 import org.course.registration.service.CourseService;
 import org.course.registration.service.EnrollService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

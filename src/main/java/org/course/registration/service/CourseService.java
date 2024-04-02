@@ -1,8 +1,10 @@
 package org.course.registration.service;
 
 import lombok.RequiredArgsConstructor;
+
 import org.course.registration.domain.Course;
 import org.course.registration.repository.CourseRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,12 +18,12 @@ public class CourseService {
     private final CourseRepository courseRepository;
 
     // 과목 전체 조회
-    public List<Course> findCourses(){
+    public List<Course> findCourses() {
         return courseRepository.findAll();
     }
 
     // 과목 ID로 과목 조회
-    public Course findCourseById(int id){
+    public Course findCourseById(int id) {
         return courseRepository.findById(id);
     }
 
@@ -32,8 +34,7 @@ public class CourseService {
         } else { // 업데이트
             course = courseRepository.merge(course);
         }
+
         return course;
     }
-
-
 }

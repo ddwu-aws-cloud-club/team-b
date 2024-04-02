@@ -1,6 +1,7 @@
 package org.course.registration.domain;
 
 import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "courseId")
+    @Column(name = "course_id")
     private int id; // 과목 id
 
     private String name; // 과목 이름
