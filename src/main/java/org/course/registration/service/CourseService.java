@@ -2,7 +2,7 @@ package org.course.registration.service;
 
 import lombok.RequiredArgsConstructor;
 
-import org.course.registration.domain.Course;
+import org.course.registration.entity.Course;
 import org.course.registration.repository.CourseRepository;
 
 import org.springframework.stereotype.Service;

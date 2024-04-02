@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpSession;
 
 import lombok.RequiredArgsConstructor;
 
-import org.course.registration.domain.Student;
+import org.course.registration.entity.Student;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,9 +2,9 @@ package org.course.registration.service;
 
 import lombok.RequiredArgsConstructor;
 
-import org.course.registration.domain.Course;
-import org.course.registration.domain.Enroll;
-import org.course.registration.domain.Student;
+import org.course.registration.entity.Course;
+import org.course.registration.entity.Enroll;
+import org.course.registration.entity.Student;
 import org.course.registration.exception.AlreadyExistException;
 import org.course.registration.exception.NotEnoughException;
 import org.course.registration.repository.EnrollRepository;

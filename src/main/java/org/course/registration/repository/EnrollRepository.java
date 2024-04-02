@@ -5,8 +5,8 @@ import jakarta.persistence.TypedQuery;
 
 import lombok.RequiredArgsConstructor;
 
-import org.course.registration.domain.Course;
-import org.course.registration.domain.Enroll;
+import org.course.registration.entity.Course;
+import org.course.registration.entity.Enroll;
 
 import org.springframework.stereotype.Repository;
 

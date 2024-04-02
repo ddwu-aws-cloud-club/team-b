@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.course.registration.domain.Student;
+import org.course.registration.entity.Student;
 import org.course.registration.service.StudentService;
 
 import org.springframework.stereotype.Controller;

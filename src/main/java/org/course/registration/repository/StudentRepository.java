@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Repository;
 
-import org.course.registration.domain.Student;
+import org.course.registration.entity.Student;
 
 import java.util.List;
 

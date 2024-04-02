@@ -1,4 +1,4 @@
-package org.course.registration.domain;
+package org.course.registration.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

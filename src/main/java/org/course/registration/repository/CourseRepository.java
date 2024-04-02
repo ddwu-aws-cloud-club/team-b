@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 
 import lombok.RequiredArgsConstructor;
 
-import org.course.registration.domain.Course;
+import org.course.registration.entity.Course;
 
 import org.springframework.stereotype.Repository;
 
