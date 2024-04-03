@@ -2,10 +2,13 @@ package org.course.registration.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
 import lombok.RequiredArgsConstructor;
-import org.course.registration.domain.Course;
+
+import org.course.registration.entity.Course;
 import org.course.registration.service.CourseService;
 import org.course.registration.service.EnrollService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +44,6 @@ public class EnrollmentController {
         return "enrolls";
     }
 
-
     // 수강신청
     @PostMapping("/enrollment/course/enroll")
     public String enrollCourse(@RequestParam("courseId") int courseId, HttpServletRequest request) {
@@ -68,5 +70,4 @@ public class EnrollmentController {
         enrollService.cancelEnrollment(studentId, courseId);
         return "redirect:/enrollment?cancelSuccess=true";
     }
-
 }

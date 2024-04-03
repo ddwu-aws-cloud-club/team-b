@@ -2,9 +2,12 @@ package org.course.registration.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+
 import lombok.RequiredArgsConstructor;
-import org.course.registration.domain.Course;
-import org.course.registration.domain.Enroll;
+
+import org.course.registration.entity.Course;
+import org.course.registration.entity.Enroll;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,6 +46,4 @@ public class EnrollRepository {
                 .setParameter("courseId", courseId)
                 .getResultList().stream().findFirst();
     }
-
-
 }

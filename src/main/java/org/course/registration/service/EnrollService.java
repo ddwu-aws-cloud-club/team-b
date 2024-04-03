@@ -1,12 +1,14 @@
 package org.course.registration.service;
 
 import lombok.RequiredArgsConstructor;
-import org.course.registration.domain.Course;
-import org.course.registration.domain.Enroll;
-import org.course.registration.domain.Student;
+
+import org.course.registration.entity.Course;
+import org.course.registration.entity.Enroll;
+import org.course.registration.entity.Student;
 import org.course.registration.exception.AlreadyExistException;
 import org.course.registration.exception.NotEnoughException;
 import org.course.registration.repository.EnrollRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class EnrollService {
+
     private final EnrollRepository enrollRepository;
     private final CourseService courseService;
     private final StudentService studentService;
@@ -49,7 +52,6 @@ public class EnrollService {
         course.setCount(course.getCount() + 1);
         courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
     }
-
 
     // 학생 ID로 수강신청한 과목 리스트 조회
     public List<Course> findEnrollmentsByStudentId(int studentId) {

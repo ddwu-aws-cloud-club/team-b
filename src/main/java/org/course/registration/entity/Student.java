@@ -1,6 +1,7 @@
-package org.course.registration.domain;
+package org.course.registration.entity;
 
 import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,8 +12,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Student {
+
     @Id
-    @Column(name = "studentId")
+    @Column(name = "student_id")
     private int id; // 학번
 
     private String phoneNum; // 전화번호
@@ -20,11 +22,10 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private List<Enroll> enrolls = new ArrayList<>();
 
-    public Student(int studentId, String phoneNum){
+    public Student(int studentId, String phoneNum) {
         this.id = studentId;
         this.phoneNum = phoneNum;
     }
-
 }
 
 

@@ -1,6 +1,7 @@
 package org.course.registration.exception;
 
 public class NotEnoughException extends RuntimeException{
+
     public NotEnoughException() {
         super();
     }
