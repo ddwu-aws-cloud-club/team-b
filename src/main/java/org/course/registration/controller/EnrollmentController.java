@@ -52,7 +52,7 @@ public class EnrollmentController {
             return "redirect:/";
         }
 
-        int studentId = (int) session.getAttribute("studentId");
+        String studentId = (String) session.getAttribute("studentId");
         // 과목 수강 신청 진행
         enrollService.enrollCourse(studentId, courseId);
         return "redirect:/enrollment?success=true";

@@ -26,7 +26,7 @@ public class EnrollService {
     private final StudentService studentService;
 
     @Transactional
-    public void enrollCourse(int studentId, int courseId) {
+    public void enrollCourse(String studentId, int courseId) {
         // 학생과 과목을 조회
         Student student = studentService.findStudentById(studentId);
         Course course = courseService.findCourseById(courseId);

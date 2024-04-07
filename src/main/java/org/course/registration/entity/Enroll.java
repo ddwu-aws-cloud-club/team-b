@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import jakarta.persistence.*;
 
@@ -13,11 +12,11 @@ import jakarta.persistence.*;
     @UniqueConstraint(columnNames = {"student_id", "course_id"})
 })
 @Getter
-@Setter
 public class Enroll {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "enroll_id")
+    /* 비식별 관계 */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

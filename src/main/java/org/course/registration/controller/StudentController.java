@@ -20,7 +20,7 @@ public class StudentController {
 
     @PostMapping("/student")
     public String register(
-        @RequestParam("studentId") int studentId,
+        @RequestParam("studentId") String studentId,
         @RequestParam("phoneNum") String phoneNum,
         HttpServletRequest request
     ) {

@@ -14,17 +14,22 @@ import java.util.List;
 public class Student {
 
     @Id
-    @Column(name = "student_id")
-    private int id; // 학번
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String phoneNum; // 전화번호
+    /* unique 제약 조건 추가 */
+    @Column(name = "student_id")
+    private String studentId; // 학번
+
+    @Column(name = "phone_number")
+    private String phoneNumber; // 전화번호
 
     @OneToMany(mappedBy = "student")
     private List<Enroll> enrolls = new ArrayList<>();
 
-    public Student(int studentId, String phoneNum) {
-        this.id = studentId;
-        this.phoneNum = phoneNum;
+    public Student(String studentId, String phoneNumber) {
+        this.studentId = studentId;
+        this.phoneNumber = phoneNumber;
     }
 }
 
