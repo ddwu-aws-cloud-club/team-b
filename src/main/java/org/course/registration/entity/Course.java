@@ -3,23 +3,21 @@ package org.course.registration.entity;
 import jakarta.persistence.*;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "course_id")
-    private int id; // 과목 id
+    private int id;
 
-    private String name; // 과목 이름
+    private String name;
 
-    private String professor; // 교수님 성함
+    private String professor;
 
-    private int limited; // 수강 정원
+    private int limited;
 
-    private int count; // 현재 정원
+    @Column(name = "current_count")
+    private int currentCount;
 }
