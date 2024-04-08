@@ -40,8 +40,8 @@ public class EnrollRepository {
     }
 
     // 이미 수강신청한 과목인지 check
-    public Optional<Enroll> findByStudentIdAndCourseId(int studentId, int courseId) {
-        return em.createQuery("SELECT e FROM Enroll e WHERE e.student.id = :studentId AND e.course.id = :courseId", Enroll.class)
+    public Optional<Enroll> findByStudentIdAndCourseId(String studentId, int courseId) {
+        return em.createQuery("SELECT e FROM Enroll e WHERE e.student.studentId = :studentId AND e.course.id = :courseId", Enroll.class)
                 .setParameter("studentId", studentId)
                 .setParameter("courseId", courseId)
                 .getResultList().stream().findFirst();

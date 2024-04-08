@@ -15,15 +15,15 @@ public class Student {
 
     @Id
     @Column(name = "student_id")
-    private int id; // 학번
+    private String studentId; // 학번
 
     private String phoneNum; // 전화번호
 
     @OneToMany(mappedBy = "student")
     private List<Enroll> enrolls = new ArrayList<>();
 
-    public Student(int studentId, String phoneNum) {
-        this.id = studentId;
+    public Student(String studentId, String phoneNum) {
+        this.studentId = studentId;
         this.phoneNum = phoneNum;
     }
 }

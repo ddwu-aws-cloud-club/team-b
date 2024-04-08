@@ -27,7 +27,7 @@ public class EnrollService {
     private final LockRepository lockRepository;
 
     @Transactional
-    public void enrollCourse(int studentId, int courseId) {
+    public void enrollCourse(String studentId, int courseId) {
         // 학생과 과목을 조회
         Student student = studentService.findStudentById(studentId);
         Course course = courseService.findCourseById(courseId);
@@ -44,9 +44,7 @@ public class EnrollService {
         }
 
         // 수강 신청 진행
-        Enroll newEnroll = new Enroll();
-        newEnroll.setStudent(student);
-        newEnroll.setCourse(course);
+        Enroll newEnroll = new Enroll(student, course);
         enrollRepository.save(newEnroll);
 
         // 과목 수강 인원 증가

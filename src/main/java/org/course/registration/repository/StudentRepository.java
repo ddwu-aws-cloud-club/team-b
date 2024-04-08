@@ -29,14 +29,14 @@ public class StudentRepository {
                 .getResultList();
     }
 
-    public List<Student> findById(int id) {
-        return em.createQuery("select s from Student s where s.id = :id", Student.class)
-                .setParameter("id", id)
+    public List<Student> findById(String studentId) {
+        return em.createQuery("select s from Student s where s.studentId = :id", Student.class)
+                .setParameter("id", studentId)
                 .getResultList();
     }
 
     // 특정 ID에 해당하는 학생 한 명을 반환
-    public Student findOneById(int id) {
-        return em.find(Student.class, id);
+    public Student findOneById(String studentId) {
+        return em.find(Student.class, studentId);
     }
 }
