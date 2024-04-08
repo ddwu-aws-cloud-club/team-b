@@ -53,13 +53,13 @@ public class EnrollService {
     }
 
     // 학생 ID로 수강신청한 과목 리스트 조회
-    public List<Course> findEnrollmentsByStudentId(int studentId) {
+    public List<Course> findEnrollmentsByStudentId(String studentId) {
         return enrollRepository.findCoursesByStudentId(studentId);
     }
 
     // 수강 취소
     @Transactional
-    public void cancelEnrollment(int studentId, int courseId) {
+    public void cancelEnrollment(String studentId, int courseId) {
         Course course = courseService.findCourseById(courseId);
 
         lockRepository.getLock(String.valueOf(studentId));
