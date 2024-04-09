@@ -2,6 +2,7 @@ package org.course.registration.service;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.course.registration.entity.Course;
 import org.course.registration.entity.Enroll;
 import org.course.registration.entity.Student;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EnrollService {
@@ -25,6 +27,7 @@ public class EnrollService {
     private final CourseService courseService;
     private final StudentService studentService;
     private final LockRepository lockRepository;
+    private final WaitlistService waitlistService;
 
     @Transactional
     public void enrollCourse(String studentId, int courseId) {
@@ -43,18 +46,14 @@ public class EnrollService {
             throw new AlreadyExistException("이미 수강 중인 과목입니다.");
         }
 
-        // 수강 신청 진행
-        Enroll newEnroll = new Enroll(student, course);
-        enrollRepository.save(newEnroll);
+        // 수강 신청 시도 시 무조건 대기열에 추가
+        waitlistService.addToWaitlist(studentId, courseId);
 
-        // 과목 수강 인원 증가
-        course.setCount(course.getCount() + 1);
-        courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
-    }
+        // 대기열 순번 조회
+        Long rank = waitlistService.getWaitlistRank(studentId, courseId);
+        log.info("대기열 순번: {}", rank);
 
-    // 학생 ID로 수강신청한 과목 리스트 조회
-    public List<Course> findEnrollmentsByStudentId(String studentId) {
-        return enrollRepository.findCoursesByStudentId(studentId);
+        waitlistService.processWaitlist(student, courseId);
     }
 
     // 수강 취소
@@ -64,10 +63,40 @@ public class EnrollService {
 
         lockRepository.getLock(String.valueOf(studentId));
         enrollRepository.deleteByStudentIdAndCourseId(studentId, courseId);
+
         // 수강 인원 감소
         int newCount = Math.max(0, course.getCount() - 1); // 0보다 밑으로 내려가는 거 방지
         course.setCount(newCount);
         courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
+
         lockRepository.releaseLock(String.valueOf(studentId));
+
+        // 수강 취소 처리
+        enrollRepository.deleteByStudentIdAndCourseId(studentId, courseId);
+        log.info("수강 취소 처리됨: 학생 ID = {}, 과목 ID = {}", studentId, courseId);
+
+        // 대기열에서 다음 학생을 자동으로 수강 신청 처리
+        waitlistService.processNextInWaitlist(courseId);
     }
+
+    public String checkEnrollmentStatus(String studentId, int courseId) {
+        Optional<Enroll> enrollment = enrollRepository.findByStudentIdAndCourseId(studentId, courseId);
+        if (enrollment.isPresent()) {
+            return "수강 신청됨";
+        } else {
+            Long rank = waitlistService.getWaitlistRank(studentId, courseId);
+            if (rank != null) {
+                return "대기열 순번: " + rank;
+            } else {
+                return "수강 신청 또는 대기열에 없음";
+            }
+        }
+    }
+
+
+    // 학생 ID로 수강신청한 과목 리스트 조회
+    public List<Course> findEnrollmentsByStudentId(String studentId) {
+        return enrollRepository.findCoursesByStudentId(studentId);
+    }
+
 }

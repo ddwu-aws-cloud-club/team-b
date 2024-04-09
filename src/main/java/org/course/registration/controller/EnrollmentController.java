@@ -9,6 +9,7 @@ import org.course.registration.entity.Course;
 import org.course.registration.service.CourseService;
 import org.course.registration.service.EnrollService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,6 +57,13 @@ public class EnrollmentController {
         // 과목 수강 신청 진행
         enrollService.enrollCourse(studentId, courseId);
         return "redirect:/enrollment?success=true";
+    }
+
+    // 수강 신청 상태 확인
+    @GetMapping("/status")
+    public String getEnrollmentStatus(@RequestParam("studentId") String studentId,
+                                                      @RequestParam("courseId") int courseId) {
+        return enrollService.checkEnrollmentStatus(studentId, courseId);
     }
 
     // 수강 신청 취소
