@@ -9,6 +9,7 @@ import org.course.registration.exception.AlreadyExistException;
 import org.course.registration.exception.NotEnoughException;
 import org.course.registration.repository.EnrollRepository;
 
+import org.course.registration.repository.LockRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,16 +18,16 @@ import java.util.Optional;
 
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class EnrollService {
 
     private final EnrollRepository enrollRepository;
     private final CourseService courseService;
     private final StudentService studentService;
+    private final LockRepository lockRepository;
 
     @Transactional
-    public void enrollCourse(int studentId, int courseId) {
+    public void enrollCourse(String studentId, int courseId) {
         // 학생과 과목을 조회
         Student student = studentService.findStudentById(studentId);
         Course course = courseService.findCourseById(courseId);
@@ -43,9 +44,7 @@ public class EnrollService {
         }
 
         // 수강 신청 진행
-        Enroll newEnroll = new Enroll();
-        newEnroll.setStudent(student);
-        newEnroll.setCourse(course);
+        Enroll newEnroll = new Enroll(student, course);
         enrollRepository.save(newEnroll);
 
         // 과목 수강 인원 증가
@@ -54,18 +53,21 @@ public class EnrollService {
     }
 
     // 학생 ID로 수강신청한 과목 리스트 조회
-    public List<Course> findEnrollmentsByStudentId(int studentId) {
+    public List<Course> findEnrollmentsByStudentId(String studentId) {
         return enrollRepository.findCoursesByStudentId(studentId);
     }
 
     // 수강 취소
     @Transactional
-    public void cancelEnrollment(int studentId, int courseId) {
+    public void cancelEnrollment(String studentId, int courseId) {
         Course course = courseService.findCourseById(courseId);
+
+        lockRepository.getLock(String.valueOf(studentId));
         enrollRepository.deleteByStudentIdAndCourseId(studentId, courseId);
         // 수강 인원 감소
         int newCount = Math.max(0, course.getCount() - 1); // 0보다 밑으로 내려가는 거 방지
         course.setCount(newCount);
         courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
+        lockRepository.releaseLock(String.valueOf(studentId));
     }
 }

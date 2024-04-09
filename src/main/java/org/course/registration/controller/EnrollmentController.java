@@ -33,7 +33,7 @@ public class EnrollmentController {
         }
 
         // 사용자 ID 가져오기
-        int studentId = (int) session.getAttribute("studentId");
+        String studentId = (String) session.getAttribute("studentId");
 
         List<Course> courses = courseService.findCourses();
         List<Course> enrolledCourses = enrollService.findEnrollmentsByStudentId(studentId);
@@ -52,7 +52,7 @@ public class EnrollmentController {
             return "redirect:/";
         }
 
-        int studentId = (int) session.getAttribute("studentId");
+        String studentId = (String) session.getAttribute("studentId");
         // 과목 수강 신청 진행
         enrollService.enrollCourse(studentId, courseId);
         return "redirect:/enrollment?success=true";
@@ -66,7 +66,7 @@ public class EnrollmentController {
             return "redirect:/";
         }
 
-        int studentId = (int) session.getAttribute("studentId");
+        String studentId = (String) session.getAttribute("studentId");
         enrollService.cancelEnrollment(studentId, courseId);
         return "redirect:/enrollment?cancelSuccess=true";
     }

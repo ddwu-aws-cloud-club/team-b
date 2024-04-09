@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import jakarta.persistence.*;
 
@@ -13,11 +12,9 @@ import jakarta.persistence.*;
     @UniqueConstraint(columnNames = {"student_id", "course_id"})
 })
 @Getter
-@Setter
 public class Enroll {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "enroll_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,6 +24,11 @@ public class Enroll {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
+
+    public Enroll(Student student, Course course) {
+        this.student = student;
+        this.course = course;
+    }
 
     // ==연관관계 메서드== //
     public void setStudent(Student student) {
