@@ -11,6 +11,7 @@ import org.course.registration.repository.EnrollRepository;
 
 import org.course.registration.repository.LockRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class EnrollService {
     }
 
     // 수강 취소
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void cancelEnrollment(String studentId, int courseId) {
         lockRepository.getLock(String.valueOf(studentId));
         Course course = courseService.findCourseById(courseId);
