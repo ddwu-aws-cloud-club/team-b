@@ -3,11 +3,9 @@ package org.course.registration.entity;
 import jakarta.persistence.*;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 public class Course {
 
     @Id
@@ -22,4 +20,12 @@ public class Course {
     private int limited; // 수강 정원
 
     private int count; // 현재 정원
+
+    public void increaseCount() {
+        this.count += 1;
+    }
+
+    public void decreaseCount() {
+        this.count = Math.max(0, this.count - 1);
+    }
 }
