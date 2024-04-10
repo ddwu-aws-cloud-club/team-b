@@ -11,6 +11,7 @@ import org.course.registration.repository.EnrollRepository;
 
 import org.course.registration.repository.LockRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class EnrollService {
         enrollRepository.save(newEnroll);
 
         // 과목 수강 인원 증가
-        course.setCount(course.getCount() + 1);
+        course.increaseCount();
         courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
     }
 
@@ -58,15 +59,14 @@ public class EnrollService {
     }
 
     // 수강 취소
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void cancelEnrollment(String studentId, int courseId) {
-        Course course = courseService.findCourseById(courseId);
-
         lockRepository.getLock(String.valueOf(studentId));
+        Course course = courseService.findCourseById(courseId);
         enrollRepository.deleteByStudentIdAndCourseId(studentId, courseId);
+
         // 수강 인원 감소
-        int newCount = Math.max(0, course.getCount() - 1); // 0보다 밑으로 내려가는 거 방지
-        course.setCount(newCount);
+        course.decreaseCount();
         courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
         lockRepository.releaseLock(String.valueOf(studentId));
     }
