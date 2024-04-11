@@ -82,7 +82,6 @@ public class WaitlistService {
 
         }
         // 과목의 현재 수강 인원 업데이트
-        course.setCount(currentCount);
         courseService.saveOrUpdateCourse(course);
         log.info("과목 ID = {}의 수강 신청 대기열 처리 종료", courseId);
 

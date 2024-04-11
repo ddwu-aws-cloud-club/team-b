@@ -56,10 +56,11 @@ public class EnrollService {
         // 과목 수강 인원 증가
         course.increaseCount();
         courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
-    }
 
         waitlistService.processWaitlist(student, courseId);
     }
+
+
 
     // 수강 취소
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -84,6 +85,7 @@ public class EnrollService {
 
     public String checkEnrollmentStatus(String studentId, int courseId) {
         Optional<Enroll> enrollment = enrollRepository.findByStudentIdAndCourseId(studentId, courseId);
+
         if (enrollment.isPresent()) {
             return "수강 신청됨";
         } else {
