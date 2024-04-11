@@ -3,7 +3,9 @@ package org.course.registration.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
@@ -11,11 +13,13 @@ import jakarta.persistence.*;
 @Table(name = "enroll", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"student_id", "course_id"})
 })
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Enroll {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
