@@ -66,3 +66,4 @@ jobs:
           envs: GITHUB_SHA
           script: |
             ssh -i "${{ secrets.PEM_NAME }}" -o StrictHostKeyChecking=no ubuntu@${{ secrets.WAS_IP }} 'bash /home/ubuntu/deploy.sh'
+            ssh -i "${{ secrets.PEM_NAME }}" -o StrictHostKeyChecking=no ubuntu@${{ secrets.WAS2_IP }} 'bash /home/ubuntu/deploy.sh'
