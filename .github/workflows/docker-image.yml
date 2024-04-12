@@ -71,4 +71,5 @@ jobs:
             sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/docker-team-b-prod
             sudo docker image prune -f
             exit
+            exit
             EOF
