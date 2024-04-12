@@ -65,19 +65,22 @@ public class EnrollService {
     // 수강 취소
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void cancelEnrollment(String studentId, int courseId) {
+        /* Named Lock */
         lockRepository.getLock(String.valueOf(studentId));
-        Course course = courseService.findCourseById(courseId);
-        enrollRepository.deleteByStudentIdAndCourseId(studentId, courseId);
 
-        // 수강 인원 감소
+        /* 해당 값이 존재하는지 확인 */
+        Course course = courseService.findCourseById(courseId);
+        Enroll enroll = enrollRepository.findByStudentIdAndCourseId(studentId, courseId).orElseThrow();
+
+        /* 위 과정에서 오류가 없다면 수강 취소를 진행한다. */
+        enrollRepository.deleteByStudentIdAndCourseId(studentId, courseId);
+        /* 현재 수강 인원 감소 */
         course.decreaseCount();
-        courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
+        courseService.saveOrUpdateCourse(course);
 
         lockRepository.releaseLock(String.valueOf(studentId));
 
-        // 수강 취소 처리
-        enrollRepository.deleteByStudentIdAndCourseId(studentId, courseId);
-        log.info("수강 취소 처리됨: 학생 ID = {}, 과목 ID = {}", studentId, courseId);
+        log.info("수강 취소가 성공적으로 완료됨: 학생 ID = {}, 과목 ID = {}", studentId, courseId);
 
         // 대기열에서 다음 학생을 자동으로 수강 신청 처리
         waitlistService.processNextInWaitlist(courseId);
