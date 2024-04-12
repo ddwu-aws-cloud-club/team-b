@@ -43,6 +43,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x test
 
+      - name: Separate Layered jar
+        run: java -Djarmode=layertools -jar build/libs/class-registration-1.0-SNAPSHOT.jar extract
+        
       # docker build & push to production
       - name: Docker build & push to prod
         if: contains(github.ref, 'main')
