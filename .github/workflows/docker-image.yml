@@ -65,11 +65,4 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA
           script: |
-            ssh -tt -i "${{ secrets.PEM_NAME }}" ${{ secrets.WAS_HOST }}@${{ secrets.WAS_IP }} << 'EOF'
-            sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/docker-team-b-prod
-            sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/docker-team-b-prod
-            sudo docker image prune -f
-            exit
-            exit
-            EOF
+            ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} 'bash /home/ubuntu/deploy.sh'
