@@ -32,32 +32,14 @@ public class EnrollService {
 
     @Transactional
     public void enrollCourse(String studentId, int courseId) {
-        // 학생과 과목을 조회
-        Student student = studentService.findStudentById(studentId);
-        Course course = courseService.findCourseById(courseId);
-
-        // 과목 수강 정원 체크
-        if (course.getCount() >= course.getLimited()) {
-            throw new NotEnoughException("정원이 다 찬 과목입니다.");
-        }
-
-        // 이미 수강 중인 과목인지 체크
-        Optional<Enroll> existingEnroll = enrollRepository.findByStudentIdAndCourseId(studentId, courseId);
-        if (existingEnroll.isPresent()) {
-            throw new AlreadyExistException("이미 수강 중인 과목입니다.");
-        }
-
         // 수강 신청 시도 시 무조건 대기열에 추가
         waitlistService.addToWaitlist(studentId, courseId);
 
         // 대기열 순번 조회
         Long rank = waitlistService.getWaitlistRank(studentId, courseId);
         log.info("대기열 순번: {}", rank);
-        // 과목 수강 인원 증가
-        course.increaseCount();
-        courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
 
-        waitlistService.processWaitlist(student, courseId);
+        waitlistService.processWaitList(studentId, courseId);
     }
 
 

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.course.registration.entity.Course;
 import org.course.registration.entity.Enroll;
 import org.course.registration.exception.AlreadyExistException;
+import org.course.registration.exception.NotEnoughException;
 import org.course.registration.repository.EnrollRepository;
 import org.course.registration.entity.Student;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,6 +24,7 @@ public class WaitlistService {
     private final CourseService courseService;
     private final RedisTemplate<String, Object> redisTemplate;
     private EnrollService enrollService;
+    private final StudentService studentService;
 
     // 대기열에 학생 추가
     public void addToWaitlist(String studentId, int courseId) {
@@ -42,21 +44,26 @@ public class WaitlistService {
     }
 
     // 대기열에서 학생 처리
-    public void processWaitlist(Student student, int courseId) {
-
+    public void processWaitList(String studentId, int courseId) {
+        // 학생과 과목을 조회
+        Student student = studentService.findStudentById(studentId);
         Course course = courseService.findCourseById(courseId);
-        final int limit = course.getLimited(); // 과목별 정원
+
+        // 과목 수강 정원 체크
+        if (course.getCount() >= course.getLimited()) {
+            throw new NotEnoughException("정원이 다 찬 과목입니다.");
+        }
 
         log.info("과목 {} ID = {}의 수강 신청 대기열 처리 시작", course, courseId);
-        log.info("limit : " + limit);
+        log.info("limit : " + course.getLimited());
 
         // 과목의 현재 수강 인원 조회
         int currentCount = course.getCount();
         log.info("현재 수강 인원: {}", currentCount);
 
-        while (currentCount < limit) {
-            String studentId = getNextStudentIdInWaitlist(courseId);
-            if (studentId == null) {
+        while (currentCount < course.getLimited()) {
+            String nextStudentId = getNextStudentIdInWaitlist(courseId);
+            if (nextStudentId == null) {
                 log.info("대기열에 더 이상 학생이 없습니다.");
                 break; // 종료
             }
@@ -66,14 +73,13 @@ public class WaitlistService {
             if (existingEnroll.isPresent()) {
                 log.info("이미 수강 중인 학생입니다: 학생 ID = {}, 과목 ID = {}", studentId, courseId);
                 removeFromWaitlist(studentId, courseId); // 대기열에서 학생 제거
-                continue; // 다음 학생으로 넘어감
+                continue;
             }
 
             // 정원 이내라면 수강 신청 처리
             try {
                 Enroll newEnroll = new Enroll(student, course);
                 enrollRepository.save(newEnroll); // 수강 신청 저장
-                currentCount++; // 수강 인원 증가
                 log.info("수강 신청 성공: 학생 ID = {}, 과목 ID = {}", studentId, courseId);
             } catch (Exception e) {
                 log.error("수강 신청 처리 중 오류 발생: {}", e.getMessage());
@@ -81,8 +87,9 @@ public class WaitlistService {
             }
 
         }
-        // 과목의 현재 수강 인원 업데이트
-        courseService.saveOrUpdateCourse(course);
+        // 과목 수강 인원 증가
+        course.increaseCount();
+        courseService.saveOrUpdateCourse(course); // 변경된 course 엔티티를 업데이트
         log.info("과목 ID = {}의 수강 신청 대기열 처리 종료", courseId);
 
     }
